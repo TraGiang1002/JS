@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18.0.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.0.0/umd/react-dom.production.min.js"></script> 
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <ul id="posts-block">
+        
+    </ul>
+    <script>
+        var dataPostApi = 'https://jsonplaceholder.typicode.com/posts';
+        // Bản thân fetch sử dụng promise > Trả về then ( Chính respond là 1 Promise )
+        fetch(dataPostApi)
+            .then(function (respond) {
+            //( Then ở fecth đã chuyển từ JSON )
+            // ( Respond là 1 promise, nên khi return sẽ trả về then )
+            return respond.json();
+            // .json on that meaning is respond.parse >> JSON > JS Type
+            })
+            // Then here
+            .then(function (posts) {
+                var htmls = posts.map(function (post) {// lấy ra danh sách các phần tử posts là JS Type chuyển từ respond
+                return `<li>
+                    <h2>${post.title}</h2>
+                    <p>${post.body}</p>
+                </li>`;
+                });
+                var html = htmls.join('');
+                document.getElementById('posts-block').innerHTML = html;
+            })
+        .catch(function (error) {
+            alert('Have problem');
+        });
+    </script>
+    <!-- <script type="text/babel">
+        // restAPI
+        var dataPostApi = 'https://jsonplaceholder.typicode.com/posts';
+        fetch(dataPostApi)
+            .then(function (respond) {
+                return respond.json();
+            })
+            .then(function (posts) {
+                var Component = function(posts){
+                    function PostList(props) {
+                        const { title, body, } = props;
+                        return (
+                            <li>
+                                <h2>{title}</h2>
+                                <p>{body}</p>
+                            </li>
+                        )
+                    }
+                    function App() {
+                        return posts.map(post => {
+                            return (
+                                <PostList
+                                    title={post.title}
+                                    body={post.body}
+                                />
+                            )
+                        })
+                    }
+                    const container = document.getElementById('posts-block')
+                    const root = ReactDOM.createRoot(container);
+                    root.render(<App />)
+                }
+                return Component;
+            })
+            .catch(function (error) {
+                alert('Have problem');
+            })
+         -->
+    </script>
+</body>
+</html>
