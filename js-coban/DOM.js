@@ -124,3 +124,6 @@ document.querySelector('.node').onclick =
         e.stopPropagation();
         console.log('Click me!')
     }
+
+var Node = document.getElementById('heading');
+console.log(Node);
